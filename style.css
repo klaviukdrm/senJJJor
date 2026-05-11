@@ -1,0 +1,500 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Скрываем системный курсор (только на десктопах) */
+@media (pointer: fine) {
+    * {
+        cursor: none !important;
+    }
+}
+
+/* Кастомный анимированный курсор */
+.custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    color: #0088cc; /* Фирменный синий акцент */
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.05s linear;
+    will-change: transform;
+}
+
+.custom-cursor svg {
+    width: 26px;
+    height: 26px;
+}
+
+/* Плавающий бейдж (Follower) */
+.cursor-follow {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: #0088cc;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+    opacity: 0;
+    /* Плавная задержка (эффект пружины из React Framer Motion) */
+    transition: opacity 0.2s ease, transform 0.15s cubic-bezier(0.17, 0.67, 0.5, 1);
+    will-change: transform;
+}
+
+body {
+    /* Системные шрифты в стиле Apple / Windows */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Красочный, но мягкий градиент (сирень и голубой) */
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #1d1d1f; /* Более глубокий черный, как у Apple */
+    padding: 40px 20px;
+}
+
+/* Главный контейнер для скролла */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* Эффект главного полотна (Canvas) в стиле Win 11 / macOS */
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    animation: cardEnter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+/* Эффект Liquid Glass / Glassmorphism */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Шапка профиля */
+.hero {
+    border-radius: 8px;
+    padding: 56px 48px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    animation: itemEnter 0.8s ease forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+    /* Делаем блок визуально главнее и "ближе" к пользователю */
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+}
+
+.hero:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1), 0 0 32px rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+@keyframes cardEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes itemEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avatar {
+    width: 160px;
+    height: 160px;
+    background: #ffffff;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.85);
+    max-width: 750px;
+    font-weight: 500;
+}
+
+/* Контакты (Telegram) */
+.contact-info {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0088cc;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    /* Тень и светлый блик сверху (эффект кнопок Windows 11) */
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.contact-btn:hover {
+    background: #0077b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 136, 204, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.contact-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 136, 204, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Переключатель языков */
+.lang-switch {
+    position: fixed; /* Закрепляем в углу при скролле */
+    top: 24px;
+    right: 24px;
+    display: flex;
+    gap: 4px;
+    z-index: 100;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.8s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.lang-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Сетка каталога */
+.section-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-align: center;
+    opacity: 0;
+    animation: itemEnter 0.8s ease forwards;
+    animation-delay: 0.3s;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.project-card {
+    padding: 16px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: itemEnter 0.8s ease forwards;
+}
+
+/* Секция услуг (Что я делаю) */
+.services-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 32px auto;
+    opacity: 0;
+    animation: itemEnter 0.8s ease forwards;
+    font-weight: 500;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.feature-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    animation: itemEnter 0.8s ease forwards;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1), 0 0 24px rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.feature-icon {
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.project-preview {
+    height: 180px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    transition: background-position 3.5s ease-in-out;
+}
+
+/* Імітація кнопок вікна Mac OS на прев'ю */
+.project-preview::before {
+    content: "•••";
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    font-size: 32px;
+    line-height: 10px;
+    letter-spacing: -3px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+.project-card:hover .project-preview {
+    background-position: bottom;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 12px;
+}
+
+.project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 20px 48px 0 rgba(0, 0, 0, 0.1), 0 0 32px rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.project-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.project-price {
+    background: #f5f5f7;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.project-card p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0 6px;
+}
+
+/* Рейтинг / Emoji Rating */
+.rating-section {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+    opacity: 0;
+    animation: itemEnter 0.8s ease forwards;
+    animation-delay: 0.7s;
+}
+
+.rating-header {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+}
+
+.emoji-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.emoji-btn {
+    background: none;
+    border: none;
+    font-size: 32px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: grayscale(1) opacity(0.4);
+    transform: scale(1);
+    user-select: none;
+}
+
+.emoji-btn:hover {
+    filter: grayscale(0.3) opacity(0.7);
+    transform: scale(1.1);
+}
+
+.emoji-btn.active {
+    filter: grayscale(0) drop-shadow(0 4px 10px rgba(0,0,0,0.15)) opacity(1);
+    transform: scale(1.2);
+}
+
+.rating-label-container {
+    position: relative;
+    height: 24px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-label {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(4px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-weight: 600;
+    font-size: 15px;
+    text-align: center;
+    pointer-events: none;
+    width: 100%;
+    color: #333;
+}
+
+.rating-label.active {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+/* Логика отображения языков на чистом CSS */
+html[lang="en"] .lang-uk { display: none; }
+html[lang="uk"] .lang-en { display: none; }
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+    .container {
+        padding: 40px 20px;
+        border-radius: 12px;
+    }
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+        padding: 32px 20px;
+    }
+    h1 { font-size: 36px; }
+    .hero p { font-size: 16px; }
+    .avatar { width: 120px; height: 120px; font-size: 48px; }
+}

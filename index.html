@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>senJJJor | Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☘️</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Оновлені стилі для карток портфоліо (у загальному світлому стилі сайту) */
+        .portfolio-grid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important; /* Робимо самі ячейки значно більшими */
+            gap: 32px !important; /* Відстань між великими картками */
+        }
+        .project-card {
+            padding: 12px !important; /* Суттєво зменшуємо рамки навколо картинки */
+            border-radius: 16px !important;
+            border: 1px solid #eaeaea !important; /* Тонка рамка для відриву від фону */
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04) !important; /* М'яка тінь */
+        }
+        .project-info {
+            padding: 16px 8px 8px !important; /* Компактніші відступи для тексту */
+        }
+        .project-preview {
+            height: 250px !important; /* Помірно збільшена висота */
+            margin-bottom: 8px !important;
+            border-radius: 6px !important;
+            border: 1px solid rgba(0, 0, 0, 0.05) !important;
+            background-size: cover !important;
+            background-position: top center !important; /* Завжди показуємо шапку сайту, а не його середину */
+            background-repeat: no-repeat !important;
+        }
+        .project-preview::before {
+            display: none !important; /* Приховуємо три крапки Mac OS */
+        }
+
+        /* Збільшення кнопок перемикання мови (ПК версія) */
+        .lang-btn {
+            font-size: 16px !important;
+            padding: 8px 18px !important;
+        }
+
+        /* Зсуваємо перемикач мов трохи ближче до центру (на ПК) */
+        .lang-switch {
+            top: 40px !important;
+            right: 40px !important;
+        }
+
+        /* Яскравіший ефект Liquid Glass для перемикача мов на мобільних пристроях */
+        @media (max-width: 768px) {
+            .lang-switch {
+                background: rgba(255, 255, 255, 0.25) !important;
+                backdrop-filter: blur(25px) saturate(200%) !important;
+                -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
+                border: 1px solid rgba(255, 255, 255, 0.4) !important;
+                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15), inset 0 1px 3px rgba(255, 255, 255, 0.7) !important;
+                border-radius: 12px !important;
+                top: 20px !important; /* На мобільному залишаємо ближче до краю */
+                right: 20px !important;
+            }
+        }
+
+        /* Повністю відключаємо кастомний курсор та підказки на мобільних пристроях */
+        @media (hover: none) and (pointer: coarse) {
+            #custom-cursor, #cursor-follow {
+                display: none !important;
+            }
+        }
+
+        /* Оновлення типографіки та аватарки в блоці Hero */
+        .hero-info p {
+            line-height: 1.7 !important; /* Збільшений міжрядковий інтервал */
+        }
+        .avatar {
+            width: 96px !important; /* Збільшені розміри для іконки-конюшини */
+            height: 96px !important;
+            font-size: 48px !important; /* Збільшуємо розмір самого емодзі */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* Акценти для секції "Що я пропоную" */
+        .feature-icon svg {
+            width: 36px !important; /* Збільшені іконки */
+            height: 36px !important;
+        }
+        .feature-card h3 {
+            font-weight: 800 !important; /* Жирніший шрифт заголовків послуг */
+            color: #1a1a1a !important;
+        }
+
+        /* Вирівнювання тексту і кнопки "Зв'язатися" */
+        .contact-info {
+            display: flex !important;
+            align-items: center !important;
+            gap: 16px !important;
+        }
+
+        /* Акцентна кнопка зв'язку (Call to Action) */
+        .contact-btn {
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%) !important;
+            color: #ffffff !important;
+            padding: 12px 40px !important; /* Зробили кнопку ширшою */
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 24px rgba(0, 136, 204, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
+            border: none !important;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .contact-btn:hover {
+            transform: translateY(-4px) scale(1.02) !important;
+            box-shadow: 0 14px 32px rgba(0, 136, 204, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+        }
+        .contact-btn svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+
+        /* Глобальне покращення мобільної версії (більше простору, немає стиснення) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 12px !important; /* Зменшуємо бокові рамки екрану для розширення контенту */
+                gap: 32px !important; /* Зменшуємо порожнечу між секціями */
+                display: flex !important; /* Вмикаємо Flexbox для контейнера */
+                flex-direction: column !important; /* Вишиковуємо секції в колонку */
+            }
+            .services {
+                order: 3 !important; /* Опускаємо "Що я пропоную" вниз */
+            }
+            .catalog {
+                order: 2 !important; /* Піднімаємо "Мої роботи" вгору одразу під головний екран */
+                padding: 32px 0 !important; /* Забираємо бокові відступи, щоб картки були на всю ширину контейнера */
+            }
+            .rating-section {
+                order: 4 !important; /* Блок з оцінкою залишається в самому низу на мобільному */
+            }
+            .hero {
+                order: 1 !important; /* Головний екран залишається першим */
+            padding: 40px 20px !important; /* Робимо головний екран масивнішим */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+        }
+        .hero-info h1 {
+            font-size: 44px !important; /* Нікнейм стає яскравим акцентом */
+            margin-top: 16px !important;
+            margin-bottom: 16px !important;
+            line-height: 1.1 !important;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr !important; /* Знімаємо жорсткі 320px, щоб не ламався екран */
+                gap: 32px !important;
+            }
+            .project-card {
+                padding: 8px !important; /* Зменшуємо рамки картки, щоб зробити скріншот відчутно ширшим */
+            }
+            .project-preview {
+                height: 240px !important; /* Робимо пропорції прямокутними, щоб боки скріншоту не обрізалися */
+            }
+            .contact-info {
+                flex-direction: column !important; /* Текст і кнопка один під одним */
+                gap: 12px !important;
+                text-align: center !important;
+            }
+            .contact-btn {
+                width: 100% !important; /* Кнопка зв'язку на всю ширину екрану */
+                justify-content: center !important;
+            }
+            
+            /* Зміщуємо акцент із тексту на ячейки */
+            .section-title {
+                font-size: 24px !important; /* Робимо заголовок акуратнішим */
+                margin-bottom: 12px !important;
+            }
+            .services-lead {
+                font-size: 14px !important; /* Зменшуємо розмір тексту */
+                opacity: 0.75 !important; /* Робимо його менш "кричущим" */
+                margin-bottom: 20px !important;
+            }
+
+            /* Значно зменшуємо візуальну вагу карток "Що я пропоную" на мобільному */
+            .feature-grid {
+                gap: 12px !important; /* Менша відстань між картками */
+            }
+            .feature-card {
+                padding: 16px !important; /* Зменшені внутрішні відступи */
+            }
+            .feature-icon svg {
+                width: 24px !important; /* Менші іконки */
+                height: 24px !important;
+            }
+            .feature-card h3 {
+                font-size: 17px !important; /* Акуратніші заголовки */
+                margin-bottom: 6px !important;
+            }
+            .feature-card p {
+                font-size: 14px !important; /* Менший основний текст */
+            }
+        }
+
+        /* Вспливаюче повідомлення (Toast - Dynamic Island Style) */
+        .toast-notification {
+            visibility: hidden;
+            min-width: 250px;
+            background: rgba(0, 136, 204, 0.25) !important; /* Ще більш прозорий фон */
+            backdrop-filter: blur(32px) saturate(180%) !important; /* Максимальне розмиття */
+            -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.7) !important; /* Дуже яскравий відблиск на склі */
+            color: #ffffff !important;
+            text-align: center !important;
+            border-radius: 40px !important;
+            padding: 12px 24px !important;
+            position: fixed !important;
+            z-index: 9999 !important;
+            left: 50% !important;
+            top: -60px !important;
+            transform: translateX(-50%) scale(0.9) !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 12px 32px rgba(0, 136, 204, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important; /* Яскравіший внутрішній відблиск */
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+        .toast-notification.show {
+            visibility: visible;
+            opacity: 1;
+            top: 24px !important;
+            transform: translateX(-50%) scale(1) !important;
+        }
+
+        /* На мобільних екранах опускаємо повідомлення нижче, щоб не перекривало кнопку мови */
+        @media (max-width: 768px) {
+            .toast-notification.show {
+                top: 80px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Скрытый SVG фильтр для эффекта жидкого стекла -->
+    <svg style="display: none;">
+        <defs>
+            <filter id="container-glass" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05 0.05" numOctaves="1" seed="1" result="turbulence" />
+                <feGaussianBlur in="turbulence" stdDeviation="2" result="blurredNoise" />
+                <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="70" xChannelSelector="R" yChannelSelector="B" result="displaced" />
+                <feGaussianBlur in="displaced" stdDeviation="4" result="finalBlur" />
+                <feComposite in="finalBlur" in2="finalBlur" operator="over" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="lang-switch glass-panel">
+        <button class="lang-btn active" data-lang="uk" onclick="setLang('uk')" data-cursor-uk="Українська" data-cursor-en="Ukrainian">UK</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')" data-cursor-uk="Англійська" data-cursor-en="English">EN</button>
+    </div>
+
+    <div class="container">
+        <header class="glass-panel hero">
+            <div class="avatar">☘️</div>
+            <div class="hero-info">
+            <h1>senJJJor</h1>
+                <p class="lang-uk">Веб-розробник, займаюсь розробкою сайтів у встановлені терміни та за розумну ціну. Також можлива технічна підтримка сайту за окремої домовленості.</p>
+                <p class="lang-en">Web developer, developing websites on time and at a reasonable price. Technical support for the site is also possible upon separate agreement.</p>
+                
+                <div class="contact-info">
+                    <span class="lang-uk">Зв'язок через Telegram:</span>
+                    <span class="lang-en">Contact via Telegram:</span>
+                <a href="https://t.me/senJJJor" class="contact-btn" data-cursor-uk="Перейти в Telegram" data-cursor-en="Open Telegram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    <span class="lang-uk">Зв'язатися</span>
+                    <span class="lang-en">Message me</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section class="services">
+            <h2 class="section-title lang-uk" style="animation-delay: 0.3s;">Що я пропоную</h2>
+            <h2 class="section-title lang-en" style="animation-delay: 0.3s;">What I offer</h2>
+            
+            <p class="services-lead lang-uk" style="animation-delay: 0.4s;">
+                Роблю повний функціонал: від вітрини та індексації в Google, до виведення замовлень у Telegram бот. Ціна залежить від ваших побажань.
+            </p>
+            <p class="services-lead lang-en" style="animation-delay: 0.4s;">
+                I build full functionality: from a storefront and Google indexing to forwarding orders to a Telegram bot. The price depends on your requirements.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card glass-panel" style="animation-delay: 0.5s;">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    </div>
+                    <h3 class="lang-uk">Зручна адмінка</h3>
+                    <h3 class="lang-en">Convenient Admin</h3>
+                    <p class="lang-uk">Легке управління контентом сайту без знання коду. Додавайте товари чи статті в один клік.</p>
+                    <p class="lang-en">Easy website content management without coding knowledge. Add products or posts in one click.</p>
+                </div>
+                <div class="feature-card glass-panel" style="animation-delay: 0.6s;">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="M10 19v-3.96 3.15"/><path d="M7 19h5"/><rect width="6" height="10" x="16" y="12" rx="2"/></svg>
+                    </div>
+                    <h3 class="lang-uk">Адаптивний дизайн</h3>
+                    <h3 class="lang-en">Responsive Design</h3>
+                    <p class="lang-uk">Сайт ідеально виглядатиме на будь-якому пристрої: від смартфонів до великих екранів комп'ютерів.</p>
+                    <p class="lang-en">The website will look perfect on any device: from smartphones to large desktop screens.</p>
+                </div>
+                <div class="feature-card glass-panel" style="animation-delay: 0.7s;">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <h3 class="lang-uk">SEO та Інтеграції</h3>
+                    <h3 class="lang-en">SEO & Integrations</h3>
+                    <p class="lang-uk">Оптимізація під пошукові системи та підключення Telegram-ботів для миттєвих сповіщень.</p>
+                    <p class="lang-en">Search engine optimization and Telegram bot integrations for instant notifications.</p>
+                </div>
+            </div>
+        </section>
+
+        <main class="catalog">
+            <h2 class="section-title lang-uk">Мої роботи</h2>
+            <h2 class="section-title lang-en">My works</h2>
+            
+            <div class="portfolio-grid">
+                <!-- Карточки работ с задержкой появления (staggered effect) -->
+                <a href="https://printfamily.com.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.4s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
+                    <div class="project-preview" style="background-image: url('images/Screenshot_396.png');"></div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="lang-uk">Ukrainian Print Family</h3>
+                                <h3 class="lang-en">Ukrainian Print Family</h3>
+                            </div>
+                            <div class="project-price">13 000 ₴</div>
+                        </div>
+                        <p class="lang-uk">Сучасний корпоративний сайт для типографії. Зручна презентація послуг та швидке замовлення.</p>
+                        <p class="lang-en">Modern corporate website for a printing company. Convenient service presentation and quick order.</p>
+                    </div>
+                </a>
+                
+                <a href="https://hardcoredivision.in.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.5s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
+                    <div class="project-preview" style="background-image: url('images/Screenshot_399.png');"></div>
+                    <div class="project-info">
+                        <div class="project-header">
+                            <div>
+                                <h3 class="lang-uk">Hardcore Division</h3>
+                                <h3 class="lang-en">Hardcore Division</h3>
+                            </div>
+                            <div class="project-price">9 500 ₴</div>
+                        </div>
+                        <p class="lang-uk">Брутальний інтернет-магазин вуличного одягу. Атмосферний темний дизайн, каталог та кошик.</p>
+                        <p class="lang-en">Brutal streetwear online store. Atmospheric dark design, product catalog, and shopping cart.</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <section class="rating-section glass-panel">
+            <p class="rating-header">
+                <span class="lang-uk">Оцініть мій сайт:</span>
+                <span class="lang-en">Rate my website:</span>
+            </p>
+            
+            <div class="emoji-container">
+                <button class="emoji-btn" data-value="1" data-cursor-uk="Жахливо" data-cursor-en="Terrible">😔</button>
+                <button class="emoji-btn" data-value="2" data-cursor-uk="Погано" data-cursor-en="Poor">😕</button>
+                <button class="emoji-btn" data-value="3" data-cursor-uk="Нормально" data-cursor-en="Okay">😐</button>
+                <button class="emoji-btn" data-value="4" data-cursor-uk="Добре" data-cursor-en="Good">🙂</button>
+                <button class="emoji-btn" data-value="5" data-cursor-uk="Чудово" data-cursor-en="Amazing">😍</button>
+            </div>
+
+            <div class="rating-label-container">
+                <div class="rating-label active" data-state="0" style="color: rgba(0,0,0,0.5);">
+                    <span class="lang-uk">Ваша оцінка</span>
+                    <span class="lang-en">Your rating</span>
+                </div>
+                <div class="rating-label" data-state="1">
+                    <span class="lang-uk">Жахливо</span>
+                    <span class="lang-en">Terrible</span>
+                </div>
+                <div class="rating-label" data-state="2">
+                    <span class="lang-uk">Погано</span>
+                    <span class="lang-en">Poor</span>
+                </div>
+                <div class="rating-label" data-state="3">
+                    <span class="lang-uk">Нормально</span>
+                    <span class="lang-en">Okay</span>
+                </div>
+                <div class="rating-label" data-state="4">
+                    <span class="lang-uk">Добре</span>
+                    <span class="lang-en">Good</span>
+                </div>
+                <div class="rating-label" data-state="5">
+                    <span class="lang-uk">Чудово</span>
+                    <span class="lang-en">Amazing</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Спливаюче повідомлення про відгук -->
+    <div id="toast" class="toast-notification">
+        <span class="lang-uk">Дякую за відгук! :)</span>
+        <span class="lang-en">Thank you for your feedback! :)</span>
+    </div>
+
+    <!-- Кастомный курсор и бейдж -->
+    <div id="custom-cursor" class="custom-cursor">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+            <path fill="currentColor" d="M1.8 4.4 7 36.2c.3 1.8 2.6 2.3 3.6.8l3.9-5.7c1.7-2.5 4.5-4.1 7.5-4.3l6.9-.5c1.8-.1 2.5-2.4 1.1-3.5L5 2.5c-1.4-1.1-3.5 0-3.3 1.9Z"/>
+        </svg>
+    </div>
+    <div id="cursor-follow" class="cursor-follow">
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Перехоплення кліків до того, як спрацює блокування з main.js
+        document.addEventListener('click', function(e) {
+            // Розблоковуємо кліки для карток портфоліо
+            if (e.target.closest('.project-card')) {
+                e.stopPropagation(); 
+            }
+            
+            // Обробка кліку по смайликах (в обхід main.js)
+            if (e.target.closest('.emoji-btn')) {
+                e.stopPropagation(); // Захищаємо клік від блокування
+                
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                
+                // Скидаємо попередній таймер, щоб не блимало при швидких кліках
+                clearTimeout(window.toastTimeout); 
+                window.toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }, true);
+    </script>
+</body>
+</html>
