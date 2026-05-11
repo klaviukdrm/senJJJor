@@ -22,6 +22,14 @@
             border-radius: 16px !important;
             border: 1px solid #eaeaea !important; /* Тонка рамка для відриву від фону */
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04) !important; /* М'яка тінь */
+            transition: all 0.7s ease-in-out !important; /* Максимально плавна анімація підйому */
+        }
+        /* Повертаємо та покращуємо ефект наведення (підсвічування) для карток */
+        .project-card:hover {
+            transform: translateY(-6px) scale(1.02) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(0, 136, 204, 0.4) !important; /* Фірмове синє підсвічування рамки */
+            box-shadow: 0 24px 48px rgba(0, 136, 204, 0.15), 0 0 24px rgba(0, 136, 204, 0.1) !important; /* Легке синє світіння */
         }
         .project-info {
             padding: 16px 8px 8px !important; /* Компактніші відступи для тексту */
@@ -34,6 +42,11 @@
             background-size: cover !important;
             background-position: top center !important; /* Завжди показуємо шапку сайту, а не його середину */
             background-repeat: no-repeat !important;
+            transition: background-position 4s ease-in-out !important; /* Повертаємо плавний скролл */
+        }
+        /* При наведенні плавно прокручуємо скріншот сайту донизу */
+        .project-card:hover .project-preview {
+            background-position: bottom center !important;
         }
         .project-preview::before {
             display: none !important; /* Приховуємо три крапки Mac OS */
@@ -437,20 +450,6 @@
             // Розблоковуємо кліки для карток портфоліо
             if (e.target.closest('.project-card')) {
                 e.stopPropagation(); 
-            }
-            
-            // Обробка кліку по смайликах (в обхід main.js)
-            if (e.target.closest('.emoji-btn')) {
-                e.stopPropagation(); // Захищаємо клік від блокування
-                
-                const toast = document.getElementById('toast');
-                toast.classList.add('show');
-                
-                // Скидаємо попередній таймер, щоб не блимало при швидких кліках
-                clearTimeout(window.toastTimeout); 
-                window.toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
             }
         }, true);
     </script>
