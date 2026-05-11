@@ -7,6 +7,11 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐸</text></svg>">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Прискорена, але плавна зміна мови */
+        .lang-uk, .lang-en {
+            transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out, filter 0.25s ease-in-out !important;
+        }
+
         /* Оновлені стилі для карток портфоліо (у загальному світлому стилі сайту) */
         .portfolio-grid {
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)) !important; /* Робимо самі ячейки значно більшими */
@@ -229,7 +234,7 @@
             font-weight: 700 !important;
             box-shadow: 0 12px 32px rgba(0, 136, 204, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important; /* Яскравіший внутрішній відблиск */
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
         }
         .toast-notification.show {
             visibility: visible;
@@ -288,18 +293,18 @@
         </header>
 
         <section class="services">
-            <h2 class="section-title lang-uk" style="animation-delay: 0.3s;">Що я пропоную</h2>
-            <h2 class="section-title lang-en" style="animation-delay: 0.3s;">What I offer</h2>
+            <h2 class="section-title lang-uk" style="animation-delay: 0.1s;">Що я пропоную</h2>
+            <h2 class="section-title lang-en" style="animation-delay: 0.1s;">What I offer</h2>
             
-            <p class="services-lead lang-uk" style="animation-delay: 0.4s;">
+            <p class="services-lead lang-uk" style="animation-delay: 0.2s;">
                 Роблю повний функціонал: від вітрини та індексації в Google, до виведення замовлень у Telegram бот. Ціна залежить від ваших побажань.
             </p>
-            <p class="services-lead lang-en" style="animation-delay: 0.4s;">
+            <p class="services-lead lang-en" style="animation-delay: 0.2s;">
                 I build full functionality: from a storefront and Google indexing to forwarding orders to a Telegram bot. The price depends on your requirements.
             </p>
 
             <div class="feature-grid">
-                <div class="feature-card glass-panel" style="animation-delay: 0.5s;">
+                <div class="feature-card glass-panel" style="animation-delay: 0.2s;">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
                     </div>
@@ -308,7 +313,7 @@
                     <p class="lang-uk">Легке управління контентом сайту без знання коду. Додавайте товари чи статті в один клік.</p>
                     <p class="lang-en">Easy website content management without coding knowledge. Add products or posts in one click.</p>
                 </div>
-                <div class="feature-card glass-panel" style="animation-delay: 0.6s;">
+                <div class="feature-card glass-panel" style="animation-delay: 0.3s;">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/><path d="M10 19v-3.96 3.15"/><path d="M7 19h5"/><rect width="6" height="10" x="16" y="12" rx="2"/></svg>
                     </div>
@@ -317,7 +322,7 @@
                     <p class="lang-uk">Сайт ідеально виглядатиме на будь-якому пристрої: від смартфонів до великих екранів комп'ютерів.</p>
                     <p class="lang-en">The website will look perfect on any device: from smartphones to large desktop screens.</p>
                 </div>
-                <div class="feature-card glass-panel" style="animation-delay: 0.7s;">
+                <div class="feature-card glass-panel" style="animation-delay: 0.4s;">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     </div>
@@ -335,7 +340,7 @@
             
             <div class="portfolio-grid">
                 <!-- Карточки работ с задержкой появления (staggered effect) -->
-                <a href="https://printfamily.com.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.4s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
+                <a href="https://printfamily.com.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.1s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
                     <div class="project-preview" style="background-image: url('images/Screenshot_396.png');"></div>
                     <div class="project-info">
                         <div class="project-header">
@@ -350,7 +355,7 @@
                     </div>
                 </a>
                 
-                <a href="https://hardcoredivision.in.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.5s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
+                <a href="https://hardcoredivision.in.ua/" target="_blank" class="project-card glass-panel" style="animation-delay: 0.2s;" data-cursor-uk="Дивитись проєкт" data-cursor-en="View project">
                     <div class="project-preview" style="background-image: url('images/Screenshot_399.png');"></div>
                     <div class="project-info">
                         <div class="project-header">
