@@ -52,29 +52,94 @@
             display: none !important; /* Приховуємо три крапки Mac OS */
         }
 
-        /* Збільшення кнопок перемикання мови (ПК версія) */
-        .lang-btn {
-            font-size: 16px !important;
-            padding: 8px 18px !important;
-        }
-
         /* Зсуваємо перемикач мов трохи ближче до центру (на ПК) */
         .lang-switch {
             top: 40px !important;
             right: 40px !important;
         }
 
-        /* Яскравіший ефект Liquid Glass для перемикача мов на мобільних пристроях */
+        /* Створюємо плаваючий білий фон (слайдер) замість різкого перемикання */
+        .lang-switch::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            bottom: 6px;
+            width: calc(50% - 8px);
+            background: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+            border-radius: 4px;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            z-index: 0;
+        }
+        
+        /* Переміщення повзунка для англійської мови */
+        html[lang="en"] .lang-switch::before {
+            transform: translateX(calc(100% + 4px)) !important;
+        }
+
+        /* Збільшення та плавна анімація кнопок перемикання мови */
+        .lang-btn {
+            font-size: 16px !important;
+            padding: 8px 18px !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            flex: 1 !important; /* Робимо кнопки ідеально однакової ширини */
+            text-align: center !important;
+            position: relative !important;
+            z-index: 1 !important;
+            background: transparent !important; /* Фон бере на себе слайдер */
+            box-shadow: none !important;
+        }
+        .lang-btn.active {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        .lang-btn:active {
+            transform: scale(0.92) !important; /* Додаємо ефект втискання при кліку */
+        }
+
+        /* Перемикач мов на мобільних пристроях (акуратний блок з кнопками) */
         @media (max-width: 768px) {
             .lang-switch {
-                background: rgba(255, 255, 255, 0.25) !important;
-                backdrop-filter: blur(25px) saturate(200%) !important;
-                -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
-                border: 1px solid rgba(255, 255, 255, 0.4) !important;
-                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15), inset 0 1px 3px rgba(255, 255, 255, 0.7) !important;
+                position: absolute !important; /* Щоб перемикач скролився разом з блоком */
+                /* Робимо акуратну підкладку (схожу на перемикач в iOS), щоб було зрозуміло, що це кнопки */
+                background: rgba(0, 0, 0, 0.06) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 1px solid rgba(0, 0, 0, 0.04) !important;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+                padding: 4px !important;
                 border-radius: 12px !important;
-                top: 20px !important; /* На мобільному залишаємо ближче до краю */
-                right: 20px !important;
+                display: flex !important;
+                gap: 4px !important;
+                z-index: 10 !important;
+                /* Зміщуємо трохи всередину, щоб кнопки не вилазили за праву межу */
+                top: 60px !important; 
+                right: 34px !important;
+            }
+            /* Адаптуємо плаваючий повзунок під мобільні відступи */
+            .lang-switch::before {
+                top: 4px !important;
+                left: 4px !important;
+                bottom: 4px !important;
+                width: calc(50% - 6px) !important;
+                border-radius: 8px !important;
+            }
+            .lang-switch .lang-btn {
+                font-size: 14px !important;
+                padding: 6px 14px !important;
+                border-radius: 8px !important;
+                background: transparent !important;
+                color: rgba(0, 0, 0, 0.5) !important;
+                box-shadow: none !important;
+                border: none !important;
+                -webkit-tap-highlight-color: transparent !important; /* Прибираємо синій прямокутник при натисканні */
+                outline: none !important;
+            }
+            .lang-switch .lang-btn.active {
+                background: transparent !important;
+                color: #1d1d1f !important;
+                box-shadow: none !important;
             }
         }
 
